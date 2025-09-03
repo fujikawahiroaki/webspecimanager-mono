@@ -1,0 +1,2 @@
+# webspecimanager-mono
+昆虫標本DB管理サービスWebSpecimanagerのシステム刷新プロジェクト
