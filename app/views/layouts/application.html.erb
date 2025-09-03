@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html>
+<html lang="ja" data-theme="default">
   <head>
-    <title><%= content_for(:title) || "Webspecimanager Mono" %></title>
+    <title><%= content_for(:title) || "Webspecimanager" %></title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="mobile-web-app-capable" content="yes">
@@ -22,9 +22,36 @@
     <%= javascript_importmap_tags %>
   </head>
 
-  <body>
-    <main class="container mx-auto mt-28 px-5 flex">
-      <%= yield %>
-    </main>
+  <body class="bg-[var(--page-bg)] text-[var(--fg)]">
+    <!-- トップバー: ページ跨ぎでDOM保持 -->
+    <header id="topbar" data-turbo-permanent>
+      <%= render "shared/topbar" %>
+    </header>
+
+    <div class="relative">
+      <!-- サイドバー: ページ跨ぎでDOM保持 -->
+      <aside id="sidebar" data-turbo-permanent
+             data-controller="sidebar"
+             data-sidebar-open-value="false"  <!-- 初期値。JSでブレークポイントに応じて上書き -->
+             class="fixed inset-y-0 left-0 z-40 w-72 transform transition-transform duration-200
+                    -translate-x-full
+                    lg:translate-x-0">
+        <%= render "shared/sidebar" %>
+      </aside>
+
+      <!-- モバイル/タブレット用のオーバーレイ（サイドバーが開いた時だけ表示） -->
+      <div data-sidebar-target="backdrop"
+           class="fixed inset-0 z-30 hidden bg-black/40 lg:hidden"
+           data-action="click->sidebar#close"></div>
+
+      <!-- コンテンツゾーン -->
+      <main id="content"
+            class="min-h-screen transition-[padding] duration-200 pt-14
+                   lg:pl-72"> <!-- lg以上はサイドバーの幅だけ余白 -->
+        <div class="mx-auto max-w-screen-2xl p-4">
+          <%= yield %>
+        </div>
+      </main>
+    </div>
   </body>
 </html>

@@ -65,3 +65,6 @@ group :test do
 end
 
 gem "activerecord-postgis-adapter", "~> 11.0"
+
+gem "omniauth-auth0"
+gem "omniauth-rails_csrf_protection"
