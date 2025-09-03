@@ -12,6 +12,9 @@ services:
     # Overrides default command so things don't shut down after the process ends.
     command: sleep infinity
 
+    ports:
+      - "3000:3000"
+
     # Uncomment the next line to use a non-root user for all processes.
     # user: vscode
 
@@ -26,7 +29,7 @@ services:
     restart: unless-stopped
 
   postgres:
-    image: postgres:16.1
+    image: postgis/postgis:16-3.5
     restart: unless-stopped
     networks:
     - default
