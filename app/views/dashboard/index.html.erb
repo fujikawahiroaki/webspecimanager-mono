@@ -1,16 +1,24 @@
 <% content_for :page_title, "ダッシュボード" %>
 <%= render "shared/content_title", title: "ダッシュボード" %>
-<% if user_signed_in? %>
-  <h2>ユーザー情報</h2>
-  <div>
-    <p>
-      <%= @username %>
-    </p>
-  </div>
-  <div>
-    <p>
-      <%= @user_id %>
-    </p>
-  </div>
-<% else %>
-<% end %>
+<div class="m-2">
+  <% if user_signed_in? %>
+    <h2>ユーザー情報</h2>
+    <div>
+      <p>
+        <%= @username %>
+      </p>
+    </div>
+    <div>
+      <p>
+        <%= @user_id %>
+      </p>
+    </div>
+  <% else %>
+    <p>ログインしてください</p>
+    <div
+      class="inline-block items-center rounded-md px-1 py-1 my-2 ring-1 ring-black/8 hover:bg-black/8",
+    >
+      <%= render "shared/sign_in_out_link" %>
+    </div>
+  <% end %>
+</div>

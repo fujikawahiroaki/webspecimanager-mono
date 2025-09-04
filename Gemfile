@@ -68,3 +68,5 @@ gem "activerecord-postgis-adapter", "~> 11.0"
 
 gem "omniauth-auth0"
 gem "omniauth-rails_csrf_protection"
+gem "ransack"
+gem "pagy"
