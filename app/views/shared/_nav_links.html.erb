@@ -1,7 +1,12 @@
 <%# locals: kind: :sidebar or :topbar %>
 <% nav_items = [
   {label: "ダッシュボード", path: root_path},
+  {label: "標本", path: root_path},
+  {label: "分類", path: root_path},
+  {label: "採集地点", path: root_path},
   {label: "採集行", path: root_path},
+  {label: "コレクション", path: root_path},
+  {label: "ラベル", path: root_path},
   # 例：{label: "標本", path: specimens_path},
 ] %>
 
@@ -10,11 +15,11 @@
   <% if kind == :sidebar %>
     <%= link_to item[:label], item[:path],
       data: { action: "click->sidebar#closeOnNavigate" },
-      class: "block rounded-lg px-1 py-2 overflow-hidden text-ellipsis text-xs"
+      class: "block rounded-lg px-1 py-2 overflow-hidden text-ellipsis"
     %>
   <% else %> <%# :topbar %>
     <%= link_to item[:label], item[:path],
-      class: "inline-flex items-center rounded-md px-2 py-2 text-xs text-ellipsis"
+      class: "inline-flex items-center rounded-md px-2 py-2 text-ellipsis"
     %>
   <% end %>
 <% end %>

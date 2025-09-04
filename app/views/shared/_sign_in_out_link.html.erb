@@ -1,0 +1,20 @@
+<% if user_signed_in? %>
+  <%= link_to "ログアウト",
+    sign_out_path,
+    data: {
+      turbo: false,
+      action: "click->sidebar#toggle",
+      aria_controls: "sidebar",
+      aria_label: "Toggle sidebar"
+    }
+  %>
+<% else %>
+  <%= button_to "ログイン", "/auth/auth0", method: :post,
+    data: {
+      turbo: false,
+      action: "click->sidebar#toggle",
+      aria_controls: "sidebar",
+      aria_label: "Toggle sidebar"
+    }
+  %>
+<% end %>
