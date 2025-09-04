@@ -1,1 +1,76 @@
 @import "tailwindcss";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* 既存の :root を少し拡張 */
+:root {
+  --page-bg:  #f3f4f6;
+  --fg:       #111827;
+
+  --topbar-bg-color:   #000000; /* ← 色は color 用の変数に */
+  --topbar-bg-image:   none;
+
+  --sidebar-bg-color:  #ffffff; /* ← こちらも同様 */
+  --sidebar-bg-image:  none;
+
+  --sidebar-w: 9rem;
+  --hover-bg: rgba(0,0,0,0.05);
+  --hairline: rgba(0,0,0,0.08);
+}
+
+#content { font-size: 14px }
+
+/* alt は従来どおり */
+html[data-theme="alt"] {
+  --topbar-bg-color: #1f2937;
+  --topbar-bg-image: none;
+  --page-bg:         #eef2ff;
+}
+
+/* sky テーマ：グラデは background-image の“値”として与える */
+html[data-theme="sky"] {
+  --topbar-fg:  #0b1220;
+  --sidebar-fg: #0b1220;
+
+  /* ページの下地（body に適用） */
+  --page-bg:        #ffffff;
+  --page-bg-image:  linear-gradient(to bottom, #ffffff, #CCE9EE);
+
+  /* バーにも同じグラデを適用（透明にしない） */
+  --topbar-bg-color:  transparent;
+  --topbar-bg-image:  linear-gradient(to bottom, #ffffff, #CCE9EE);
+
+  --sidebar-bg-color: transparent;
+  --sidebar-bg-image: linear-gradient(to bottom, #ffffff, #CCE9EE);
+
+  --hover-bg:   rgba(15 23 42 / 0.06);
+  --hairline:   rgba(15 23 42 / 0.06);
+  --shadow-sep-h: 0 1px 0 rgba(15 23 42 / 0.06);
+  --shadow-sep-v: 1px 0 0 rgba(15 23 42 / 0.06);
+}
+
+/* body（ページ下地） */
+html[data-theme="sky"] body {
+  background-color: var(--page-bg);
+  background-image: var(--page-bg-image);
+  background-attachment: fixed;
+}
+
+/* ★ トップバー／サイドバー：色と画像を“別プロパティ”で適用 */
+#topbar {
+  background-color: var(--topbar-bg-color);
+  background-image: var(--topbar-bg-image);
+  background-attachment: fixed;
+  /* 境目の淡い影 */
+  box-shadow: 0 1px 0 rgba(15,23,42,0.06);
+}
+
+#sidebar {
+  background-color: var(--sidebar-bg-color);
+  background-image: var(--sidebar-bg-image);
+  background-attachment: fixed;
+  /* 境目の淡い影 */
+  box-shadow: 1px 0 0 rgba(15,23,42,0.06);
+}

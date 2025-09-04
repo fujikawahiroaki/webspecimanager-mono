@@ -1,0 +1,24 @@
+<nav id="topbar" class="fixed inset-x-0 top-0 z-50 h-14
+            bg-[var(--topbar-bg)] text-[var(--topbar-fg)]
+            shadow-[var(--shadow-sep-h)] flex items-center">
+  <div class="w-full px-2 flex items-center gap-2">
+    <!-- モバイルだけ表示 -->
+    <button type="button"
+            class="md:hidden inline-flex items-center justify-center rounded-md px-1 py-1 text-xs
+                   ring-1 ring-black/8 hover:bg-black/8"
+            data-action="click->sidebar#toggle"
+            aria-controls="sidebar" aria-label="Toggle sidebar">
+      <span aria-hidden="true">MENU</span>
+    </button>
+
+    <div class="font-semibold tracking-wide text-sm flex items-center">
+      <img src="<%= asset_path('logo192.png') %>" alt="アイコン" class="h-8 w-8 mr-1">
+      <span>WebSpecimanager</span>
+    </div>
+
+    <!-- md以上で右寄せの横並びナビ -->
+    <div class="hidden md:flex ml-auto items-center gap-1">
+      <%= render "shared/nav_links", kind: :topbar %>
+    </div>
+  </div>
+</nav>

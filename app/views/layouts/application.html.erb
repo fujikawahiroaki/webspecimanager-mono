@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ja" data-theme="default">
+<html lang="ja" data-theme="sky">
   <head>
     <title><%= content_for(:title) || "Webspecimanager" %></title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -13,45 +13,40 @@
     <%# Enable PWA manifest for installable apps (make sure to enable in config/routes.rb too!) %>
     <%#= tag.link rel: "manifest", href: pwa_manifest_path(format: :json) %>
 
-    <link rel="icon" href="/icon.png" type="image/png">
-    <link rel="icon" href="/icon.svg" type="image/svg+xml">
-    <link rel="apple-touch-icon" href="/icon.png">
+    <link rel="icon" href="<%= asset_path('favicon.ico') %>" type="image/x-icon">
+    <link rel="apple-touch-icon" href="<%= asset_path('favicon.ico') %>">
 
     <%# Includes all stylesheet files in app/assets/stylesheets %>
     <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
   </head>
 
-  <body class="bg-[var(--page-bg)] text-[var(--fg)]">
-    <!-- トップバー: ページ跨ぎでDOM保持 -->
-    <header id="topbar" data-turbo-permanent>
+  <body class="bg-[var(--page-bg)] text-[var(--fg)]" data-controller="sidebar">
+    <header data-turbo-permanent>
       <%= render "shared/topbar" %>
     </header>
 
-    <div class="relative">
-      <!-- サイドバー: ページ跨ぎでDOM保持 -->
-      <aside id="sidebar" data-turbo-permanent
-             data-controller="sidebar"
-             data-sidebar-open-value="false"  <!-- 初期値。JSでブレークポイントに応じて上書き -->
-             class="fixed inset-y-0 left-0 z-40 w-72 transform transition-transform duration-200
-                    -translate-x-full
-                    lg:translate-x-0">
-        <%= render "shared/sidebar" %>
-      </aside>
+    <!-- モバイル専用サイドバー（md以上では非表示） -->
+    <aside id="sidebar" data-turbo-permanent
+           data-sidebar-target="panel"
+           class="fixed top-14 bottom-0 left-0 z-50 w-[var(--sidebar-w)]
+                  transform transition-transform duration-200
+                  -translate-x-full md:hidden">
+      <div class="h-full bg-[var(--sidebar-bg)] text-[var(--sidebar-fg)] shadow-[var(--shadow-sep-v)]">
+        <nav class="p-3 space-y-1 overflow-y-auto">
+          <%= render "shared/nav_links", kind: :sidebar %>
+        </nav>
+      </div>
+    </aside>
 
-      <!-- モバイル/タブレット用のオーバーレイ（サイドバーが開いた時だけ表示） -->
-      <div data-sidebar-target="backdrop"
-           class="fixed inset-0 z-30 hidden bg-black/40 lg:hidden"
-           data-action="click->sidebar#close"></div>
+    <!-- モバイル用バックドロップ（md以上は非表示） -->
+    <div id="sidebar-backdrop" data-sidebar-target="backdrop"
+         class="fixed inset-x-0 top-14 bottom-0 z-40 hidden bg-black/40 md:hidden"
+         data-action="click->sidebar#close"></div>
 
-      <!-- コンテンツゾーン -->
-      <main id="content"
-            class="min-h-screen transition-[padding] duration-200 pt-14
-                   lg:pl-72"> <!-- lg以上はサイドバーの幅だけ余白 -->
-        <div class="mx-auto max-w-screen-2xl p-4">
-          <%= yield %>
-        </div>
-      </main>
-    </div>
+    <!-- コンテンツ：サイドバー常設をやめたので左余白は不要 -->
+    <main id="content" class="min-h-screen transition-[padding] duration-200 pt-14">
+      <div class="p-4 md:p-8"><%= yield %></div>
+    </main>
   </body>
 </html>
