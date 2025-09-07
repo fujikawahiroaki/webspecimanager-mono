@@ -10,9 +10,9 @@ export default class extends Controller {
   }
 
   connect() {
-    if (this.hasPanelTarget) this.apply()           // ← 初回同期
+    if (this.hasPanelTarget) this.apply() // 初回同期
 
-    // Turbo遷移のたびに同期（permanent要素でもフックで確実に走らせる）
+    // Turbo遷移のたびに同期(permanent要素でもフックで確実に走らせる)
     this._onTurboLoad = () => { if (this.hasPanelTarget) this.apply() }
     this._onBeforeRender = () => { if (this.hasPanelTarget) this.apply() }
     this._onBeforeCache = () => { if (this.hasPanelTarget) this.apply() }
@@ -31,17 +31,17 @@ export default class extends Controller {
   toggle() { if (!this.hasPanelTarget) return; this.open = !this.open; this.persist(); this.apply() }
   close()  { if (!this.hasPanelTarget) return; this.open = false;      this.persist(); this.apply() }
 
-  // ★ モバイル時のみ、リンククリック直後に閉じる
+  // モバイル時のみ、リンククリック直後に閉じる
   closeOnNavigate(event) {
     if (!this.hasPanelTarget) return
     const isTabletUp = window.matchMedia("(min-width: 768px)").matches
-    if (isTabletUp) return            // md以上はサイドバー自体が無いので何もしない
-    // ここでは preventDefault しない: Turbo の遷移はそのまま進める
+    if (isTabletUp) return // md以上はサイドバー自体が無いので何もしない
+    // ここでは preventDefault しない Turbo の遷移はそのまま進める
     this.close()
   }
 
   apply() {
-    // open 状態と DOM クラスを同期（← これが遷移直後にも必ず走るようにした）
+    // open 状態と DOM クラスを同期(遷移直後にも必ず走る)
     this.panelTarget.classList.toggle("-translate-x-full", !this.open)
     this.panelTarget.classList.toggle("translate-x-0", this.open)
 
