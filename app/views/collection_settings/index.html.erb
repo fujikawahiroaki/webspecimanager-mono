@@ -1,1 +1,7 @@
-<%= render "shared/content_title", title: "コレクション" %>
+<div>
+  <div class="flex justify-between items-center mb-2">
+    <%= render "shared/content_title", title: "コレクション" %>
+    <%= render "shared/flash_zone" %>
+    <%= ui_link_button "作成", new_collection_setting_path %>
+  </div>
+</div>
